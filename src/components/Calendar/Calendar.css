@@ -1,0 +1,100 @@
+/* Styling for the overall calendar container */
+.react-calendar {
+  width: 100%;
+  max-width: 100%;
+  font-size: 1.8rem;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  overflow: hidden;
+}
+
+/* Style for the month view */
+.react-calendar__month-view {
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+/* Style for weekdays' text */
+.react-calendar__month-view__weekdays {
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: #3f51b5;
+  text-align: center;
+}
+
+/* Tile styling */
+.react-calendar__tile {
+  width: 2.5em;
+  height: 2.5em;
+  font-size: 1.6rem;
+  line-height: 2.5em;
+  text-align: center;
+  border-radius: 5%;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.react-calendar__tile:hover {
+  background-color: #fe9a00;
+  color: white;
+  transform: scale(1.1);
+}
+
+.react-calendar__tile--active {
+  background-color: #2196f3;
+  color: white;
+}
+
+.react-calendar__tile--now {
+  background-color: #00b300;
+  color: white;
+}
+
+.react-calendar__navigation {
+  display: flex;
+}
+
+abbr[title] { 
+  text-decoration: none;
+  color: #000032;
+}
+
+/* Navigation buttons */
+.react-calendar__navigation button {
+  font-size: 1.8rem;
+  padding: 10px;
+  margin: 1px;
+  background-color: #000032;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  min-width: 50px;
+  transition: background-color 0.3s ease;
+}
+
+.react-calendar__navigation button:hover {
+  background-color: #283593;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .react-calendar {
+    font-size: 1.4rem;
+    padding: 5px;
+  }
+
+  .react-calendar__tile {
+    width: 2em;
+    height: 2em;
+    font-size: 1.2rem;
+  }
+  
+  .react-calendar__navigation button {
+    font-size: 1.5rem;
+    padding: 8px;
+  }
+}

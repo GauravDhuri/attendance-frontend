@@ -4,7 +4,8 @@ import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Admin from './pages/Admin';
-import Employee from './pages/Employee';
+import Attendance from './pages/Attendance';
+import EmployeeInfo from './pages/Employee.js/EmployeeInfo';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -26,12 +27,13 @@ function App() {
       <div style={{ display: 'flex', height: '100vh' }}>
         {isAuthenticated && <Navbar handleLogout={handleLogout}/>}
         
-        <div style={{ paddingLeft: '20px', paddingRight: '20px', width: '100%' }}>
+        <div style={{ paddingLeft: '40px', paddingRight: '40px', width: '100%' }}>
           <Routes>
             <Route path="/" element={<Login setIsAuthenticated={setIsAuthenticated}/>} />
+            <Route path='/employeeInfo' element={<EmployeeInfo />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/admin" element={<Admin />} />
-            <Route path="/employee" element={<Employee />} />
+            <Route path="/attendance" element={<Attendance />} />
           </Routes>
         </div>
       </div>

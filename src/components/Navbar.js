@@ -32,11 +32,14 @@ const Navbar = ({ handleLogout }) => {
         <ListItem button onClick={() => handleNavigation('/dashboard')}>
           <ListItemText primary="Dashboard" sx={{ paddingLeft: '20px', fontWeight: 'bold' }} />
         </ListItem>
-        <ListItem button onClick={() => handleNavigation('/employee')}>
-          <ListItemText primary="Employee" sx={{ paddingLeft: '20px', fontWeight: 'bold' }} />
+        <ListItem button onClick={() => handleNavigation('/employeeInfo')}>
+          <ListItemText primary="Employee Panel" sx={{ paddingLeft: '20px', fontWeight: 'bold' }} />
+        </ListItem>
+        <ListItem button onClick={() => handleNavigation('/attendance')}>
+          <ListItemText primary="Attendance Panel" sx={{ paddingLeft: '20px', fontWeight: 'bold' }} />
         </ListItem>
         <ListItem button onClick={() => handleNavigation('/admin')}>
-          <ListItemText primary="Admin" sx={{ paddingLeft: '20px', fontWeight: 'bold' }} />
+          <ListItemText primary="Admin Panel" sx={{ paddingLeft: '20px', fontWeight: 'bold' }} />
         </ListItem>
         <ListItem button onClick={handleLogoutClick}>
           <ListItemText primary="Logout" sx={{ paddingLeft: '20px', fontWeight: 'bold' }} />

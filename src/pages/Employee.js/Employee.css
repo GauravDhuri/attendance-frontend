@@ -1,0 +1,88 @@
+/* Styling for the overall table container */
+.table-container {
+  width: 100%;
+  max-width: 100%;
+  font-size: 1.6rem;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  overflow: hidden;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Table header */
+th {
+  font-size: 1.6rem;
+  background-color: #000032;
+  color: white;
+  text-align: center;
+  padding: 12px;
+  font-weight: bold;
+}
+
+th:first-child {
+  border-top-left-radius: 10px;
+}
+
+th:last-child {
+  border-top-right-radius: 10px;
+}
+
+/* Table data */
+td {
+  font-size: 1.6rem;
+  text-align: center;
+  padding: 12px;
+  border: 1px solid #ddd;
+}
+
+/* Styling for the total work hours section */
+.total-hours {
+  margin-top: 20px;
+  font-size: 1.6rem;
+  font-weight: bold;
+  text-align: center;
+  color: #000032;
+}
+
+/* Pagination styling */
+.pagination {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.pagination button {
+  padding: 10px 25px;
+  margin: 0 20px;
+  cursor: pointer;
+  background-color: #000032;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 1.6rem;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #283593;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-size: 1.6rem;
+  color: #000032;
+}
