@@ -55,6 +55,7 @@
 
 .react-calendar__navigation {
   display: flex;
+  margin-bottom: 10px;
 }
 
 abbr[title] { 

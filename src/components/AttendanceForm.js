@@ -23,8 +23,9 @@ const AttendanceForm = ({ date }) => {
   useEffect(() => {
     const fetchAttendanceData = async () => {
       try {
+        const formattedDate = date.toLocaleDateString('en-CA');
         const attendanceData = await postRequest('/attendance/fetch', {
-          date: date,
+          date: formattedDate,
           email: localStorage.getItem('email') || '',
         });
   
@@ -45,7 +46,7 @@ const AttendanceForm = ({ date }) => {
 
   return (
     <Box sx={{ marginTop: '20px', width: '100%', textAlign: 'center' }}>
-      <Typography variant="h4">Set Attendance for {date.toDateString()}</Typography>
+      <Typography variant="h4">{checkInTime && checkOutTime ? 'Update' : 'Set'} Attendance for {date.toDateString()}</Typography>
       
       <Box sx={{ 
         display: 'flex', 

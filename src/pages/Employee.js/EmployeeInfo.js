@@ -1,49 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import './Employee.css';
+import { postRequest } from '../../utils/utils';
 
 function EmployeeInfo() {
-  const [attendanceData, setAttendanceData] = useState([
-      {
-        "date": "2025-02-01",
-        "checkIn": "09:00 AM",
-        "checkOut": "05:00 PM",
-        "totalHours": 8
-      },
-      {
-        "date": "2025-02-02",
-        "checkIn": "09:30 AM",
-        "checkOut": "06:00 PM",
-        "totalHours": 8.5
-      },
-      {
-        "date": "2025-02-02",
-        "checkIn": "09:30 AM",
-        "checkOut": "06:00 PM",
-        "totalHours": 8.5
-      },
-      {
-        "date": "2025-02-02",
-        "checkIn": "09:30 AM",
-        "checkOut": "06:00 PM",
-        "totalHours": 8.5
-      },
-      {
-        "date": "2025-02-02",
-        "checkIn": "09:30 AM",
-        "checkOut": "06:00 PM",
-        "totalHours": 8.5
-      },
-    ]);
-  const [totalRecords, setTotalRecords] = useState(50);
+  const [attendanceData, setAttendanceData] = useState([]);
+  const [totalRecords, setTotalRecords] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage] = useState(5);
+  const [pageSize] = useState(5);
   const [loading, setLoading] = useState(false);
 
-  const totalWorkHours = attendanceData.reduce((acc, curr) => acc + curr.totalHours, 0);
-
-  const totalPages = Math.ceil(totalRecords / rowsPerPage);
+  const totalPages = Math.ceil(totalRecords / pageSize);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  useEffect(() => {
+    const fetchEmployeeData = async () => {
+      try {
+        setLoading(true);
+        const employeeData = await postRequest('/attendance/fetchAll', { 
+          email: localStorage.getItem('email'),
+          pagination: {
+            page: currentPage,
+            pageSize: pageSize
+          }
+        });
+        
+        if (employeeData.status) {
+          setAttendanceData(employeeData.data.records);
+          setTotalRecords(employeeData.data.pagination.totalCount);
+        } else {
+          setAttendanceData([]);
+        }
+      } catch (error) {
+        console.error("Error fetching all attendance data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchEmployeeData();
+  }, [currentPage]);
 
   return (
     <div className="employee-container">
@@ -62,12 +57,12 @@ function EmployeeInfo() {
               </tr>
             </thead>
             <tbody>
-              {attendanceData.map((entry, index) => (
-                <tr key={index}>
+              {attendanceData.map((entry) => (
+                <tr key={entry.date}>
                   <td>{entry.date}</td>
-                  <td>{entry.checkIn}</td>
-                  <td>{entry.checkOut}</td>
-                  <td>{entry.totalHours}</td>
+                  <td>{entry.checkInTime}</td>
+                  <td>{entry.checkOutTime}</td>
+                  <td>{entry.totalWorkHours}</td>
                 </tr>
               ))}
             </tbody>
@@ -83,10 +78,6 @@ function EmployeeInfo() {
         <button onClick={() => paginate(currentPage + 1)} disabled={currentPage === totalPages}>
           Next
         </button>
-      </div>
-
-      <div className="total-hours">
-        <h3>Total Work Hours: {totalWorkHours} hours</h3>
       </div>
     </div>
   );
