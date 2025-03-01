@@ -38,7 +38,7 @@ function App() {
             <Route path="/dashboard" element={<PrivateRoute isAuthenticated={isAuthenticated} element={<Dashboard />} />} />
             <Route path='/employeeInfo' element={<PrivateRoute isAuthenticated={isAuthenticated} element={<EmployeeInfo />} />} />
             <Route path="/attendance" element={<PrivateRoute isAuthenticated={isAuthenticated} element={<Attendance />} />} />
-            <Route path="/admin" element={<PrivateRoute isAuthenticated={isAuthenticated} element={<Admin />} />} />
+            <Route path="/admin" element={<PrivateRoute isAuthenticated={isAuthenticated && (localStorage.getItem('role') || '') === 'Admin'} element={<Admin />} />} />
           </Routes>
         </div>
       </div>
