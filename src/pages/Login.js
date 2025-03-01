@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button, Box, Typography, Container } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { getCookie, postRequest } from '../utils/utils';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Login = ({ setIsAuthenticated }) => {
   const [email, setEmail] = useState('');
@@ -11,16 +12,21 @@ const Login = ({ setIsAuthenticated }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const login = await postRequest('/user/login', { email: email, password: password });
-    if(login.status) {
-      const token = getCookie('token');
-      localStorage.setItem('token', token);
-      localStorage.setItem('userName', login.data.userName);
-      localStorage.setItem('email', login.data.email);
-      setIsAuthenticated(true);
-      navigate('/dashboard');
-    } else {
-      console.log('Login Failed', login);
+    try {
+      const login = await postRequest('/user/login', { email: email, password: password });
+      if(login.status) {
+        const token = getCookie('token');
+        localStorage.setItem('token', token);
+        localStorage.setItem('userName', login.data.userName);
+        localStorage.setItem('email', login.data.email);
+        localStorage.setItem('role', login.data.role);
+        setIsAuthenticated(true);
+        navigate('/dashboard');
+      } else {
+        toast.error('Login Failed')
+      }
+    } catch (error) {
+      toast.error('Login Failed')
     }
   };
 
@@ -33,6 +39,7 @@ const Login = ({ setIsAuthenticated }) => {
         height: '100%',
       }}
     >
+      <ToastContainer position='top-center'/>
       <Container maxWidth="xs">
         <Box
           sx={{
