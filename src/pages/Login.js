@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, Typography, Container } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { getCookie, postRequest } from '../utils/utils';
 
 const Login = ({ setIsAuthenticated }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    localStorage.setItem('token', 'dummy_token');
-    setIsAuthenticated(true);
-
-    navigate('/dashboard');
+    const login = await postRequest('/user/login', { email: email, password: password });
+    if(login.status) {
+      const token = getCookie('token');
+      localStorage.setItem('token', token);
+      setIsAuthenticated(true);
+      navigate('/dashboard');
+    } else {
+      console.log('Login Failed', login);
+    }
   };
 
   return (
