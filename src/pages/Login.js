@@ -2,22 +2,21 @@ import React, { useState } from 'react';
 import { TextField, Button, Box, Typography, Container } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { getCookie, postRequest } from '../utils/utils';
-import { useUser } from '../context/userContext';
 
 const Login = ({ setIsAuthenticated }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const { setUser } = useUser();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const login = await postRequest('/user/login', { email: email, password: password });
     if(login.status) {
-      setUser({ username: login.data.userName, email: login.data.email });
       const token = getCookie('token');
       localStorage.setItem('token', token);
+      localStorage.setItem('userName', login.data.userName);
+      localStorage.setItem('email', login.data.email);
       setIsAuthenticated(true);
       navigate('/dashboard');
     } else {

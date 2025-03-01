@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import CustomCalendar from '../components/Calendar/Calendar';
+import AttendanceForm from '../components/AttendanceForm';
 
 const Attendance = () => {
   const [date, setDate] = useState(new Date());
@@ -14,6 +15,7 @@ const Attendance = () => {
       <h1>Employee Attendance Panel</h1>
       <div style={{ width: '90%' }}>
         <CustomCalendar date={date} setDate={handleDateChange} />
+        <AttendanceForm date={date}/>
       </div>
     </Box>
   );

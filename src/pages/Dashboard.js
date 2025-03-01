@@ -1,12 +1,11 @@
 import React from 'react';
-import { useUser } from './../context/userContext';
 
 const Dashboard = () => {
-  const { user } = useUser(); 
+  const userName = localStorage.getItem('userName') || '';
 
   return (
     <div>
-      <h1>Welcome, {user.username}!</h1>
+      <h1>Welcome, {userName}!</h1>
     </div>
   );
 };
