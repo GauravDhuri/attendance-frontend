@@ -1,0 +1,18 @@
+.attendance-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.attendance-form button {
+  font-size: 1.4rem;
+  padding: 8px 16px;
+  margin-top: 20px;
+  background-color: #000032;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}

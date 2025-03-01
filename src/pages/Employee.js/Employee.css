@@ -1,4 +1,3 @@
-/* Styling for the overall table container */
 .table-container {
   width: 100%;
   max-width: 100%;
@@ -10,7 +9,6 @@
   overflow: hidden;
 }
 
-/* Table styling */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -20,7 +18,6 @@ table {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Table header */
 th {
   font-size: 1.6rem;
   background-color: #000032;
@@ -38,7 +35,7 @@ th:last-child {
   border-top-right-radius: 10px;
 }
 
-/* Table data */
+
 td {
   font-size: 1.6rem;
   text-align: center;
@@ -46,35 +43,26 @@ td {
   border: 1px solid #ddd;
 }
 
-/* Styling for the total work hours section */
-.total-hours {
-  margin-top: 20px;
-  font-size: 1.6rem;
-  font-weight: bold;
-  text-align: center;
-  color: #000032;
-}
-
-/* Pagination styling */
 .pagination {
   margin-top: 50px;
   text-align: center;
 }
 
 .pagination button {
-  padding: 10px 25px;
-  margin: 0 20px;
-  cursor: pointer;
+  font-size: 1.4rem;
+  padding: 8px 16px;
+  margin: 5px;
   background-color: #000032;
   color: white;
   border: none;
-  border-radius: 25px;
-  font-size: 1.6rem;
-  transition: background-color 0.3s ease;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .pagination button:hover {
-  background-color: #283593;
+  background-color: #3d4b74;
+  transform: translateY(-2px);
 }
 
 .pagination button:disabled {

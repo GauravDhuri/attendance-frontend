@@ -1,0 +1,44 @@
+.quick-selection {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.quick-selection button {
+  font-size: 1.4rem;
+  padding: 8px 16px;
+  margin: 5px;
+  background-color: #000032;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.quick-selection button:hover {
+  background-color: #3d4b74;
+  transform: translateY(-2px);
+}
+
+.quick-selection button:active {
+  background-color: #2b3656;
+  transform: translateY(1px);
+}
+
+.quick-selection button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.date-range {
+  font-size: 1.6rem;
+  color: #000032;
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px 10px 10px 0px;
+}
+
+.date-range label {
+  margin-left: 10px;
+  margin-right: 10px;
+}

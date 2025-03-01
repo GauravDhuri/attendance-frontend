@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Box, TextField, Button, Typography } from '@mui/material';
-import { postRequest } from '../utils/utils';
+import { Box, TextField, Typography } from '@mui/material';
+import { postRequest } from '../../utils/utils';
+import './AttendanceForm.css'
 
 const AttendanceForm = ({ date }) => {
   const [checkInTime, setCheckInTime] = useState('');
@@ -45,8 +46,8 @@ const AttendanceForm = ({ date }) => {
   }, [date]);
 
   return (
-    <Box sx={{ marginTop: '20px', width: '100%', textAlign: 'center' }}>
-      <Typography variant="h4">{checkInTime && checkOutTime ? 'Update' : 'Set'} Attendance for {date.toDateString()}</Typography>
+    <div className='attendance-form'>
+      <Typography variant="h4">Set Attendance for {date.toDateString()}</Typography>
       
       <Box sx={{ 
         display: 'flex', 
@@ -63,8 +64,11 @@ const AttendanceForm = ({ date }) => {
             value={checkInTime}
             onChange={(e) => setCheckInTime(e.target.value)}
             sx={{
-              width: '200px',
-              height: '56px',
+              width: '120px',
+              height: '40px',
+              '& input': {
+                padding: '8px'
+              },
             }}
           />
         </Box>
@@ -76,17 +80,20 @@ const AttendanceForm = ({ date }) => {
             value={checkOutTime}
             onChange={(e) => setCheckOutTime(e.target.value)}
             sx={{
-              width: '200px',
-              height: '56px',
+              width: '120px',
+              height: '40px',
+              '& input': {
+                padding: '8px'
+              },
             }}
           />
         </Box>
       </Box>
       
-      <Button variant="contained" color="primary" onClick={handleSubmit} sx={{ marginTop: '20px' }}>
+      <button onClick={handleSubmit} >
         Submit
-      </Button>
-    </Box>
+      </button>
+    </div>
   );
 };
 

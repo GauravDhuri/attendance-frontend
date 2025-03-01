@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import CustomCalendar from '../components/Calendar/Calendar';
-import AttendanceForm from '../components/AttendanceForm';
+import AttendanceForm from '../components/AttendanceForm/AttendanceForm';
 
 const Attendance = () => {
   const [date, setDate] = useState(new Date());
