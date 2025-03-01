@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, TextField, Button, Typography } from '@mui/material';
 import { postRequest } from '../utils/utils';
 
@@ -19,6 +19,29 @@ const AttendanceForm = ({ date }) => {
       console.log('Attendance added successfully')
     }
   };
+
+  useEffect(() => {
+    const fetchAttendanceData = async () => {
+      try {
+        const attendanceData = await postRequest('/attendance/fetch', {
+          date: date,
+          email: localStorage.getItem('email') || '',
+        });
+  
+        if(attendanceData.status && Object.keys(attendanceData.data).length) {
+          setCheckInTime(attendanceData.data.checkInTime)
+          setCheckOutTime(attendanceData.data.checkOutTime)
+        } else {
+          setCheckInTime('')
+          setCheckOutTime('')
+        }
+      } catch (error) {
+        console.error("Error fetching attendance data:", error);
+      }
+    };
+  
+    fetchAttendanceData()
+  }, [date]);
 
   return (
     <Box sx={{ marginTop: '20px', width: '100%', textAlign: 'center' }}>
