@@ -4,10 +4,9 @@ import { postRequest } from '../../utils/utils';
 import './AttendanceForm.css'
 import { toast, ToastContainer } from 'react-toastify';
 
-const AttendanceForm = ({ date, checkInTime, checkOutTime, setCheckInTime, setCheckOutTime }) => {
+const AttendanceForm = ({ date, checkInTime, checkOutTime, setCheckInTime, setCheckOutTime, name }) => {
 
   const handleSubmit = async () => {
-    const email = localStorage.getItem('email') || '';
     const formattedDate = date.toLocaleDateString('en-CA');
 
     if (checkOutTime && !checkInTime) {
@@ -25,10 +24,12 @@ const AttendanceForm = ({ date, checkInTime, checkOutTime, setCheckInTime, setCh
       }
     }
 
+    if(!name) return
+
     try {
       const markObj = {
         date: formattedDate,
-        email 
+        name 
       }
       if(checkInTime) markObj.checkInTime = checkInTime;
       if(checkOutTime) markObj.checkOutTime = checkOutTime;

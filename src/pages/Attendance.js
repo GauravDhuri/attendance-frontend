@@ -64,6 +64,7 @@ const Attendance = () => {
           setCheckInTime={setCheckInTime}
           checkOutTime={checkOutTime}
           setCheckOutTime={setCheckOutTime}
+          name={nameFilter}
         />
       </div>
     </Box>
