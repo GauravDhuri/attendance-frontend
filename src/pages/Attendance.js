@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import AditionalFilter from '../components/AdditionalFilter';
 
 const Attendance = () => {
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(new Date());
   const [nameFilter, setNameFilter] = useState(localStorage.getItem('userName'));
   const [checkInTime, setCheckInTime] = useState('');
   const [checkOutTime, setCheckOutTime] = useState('');
@@ -29,7 +29,6 @@ const Attendance = () => {
         fetchReqObj.email = localStorage.getItem('email')
       }
       const attendanceData = await postRequest('/attendance/fetch', fetchReqObj);
-
       if(attendanceData.status && Object.keys(attendanceData.data).length) {
         setCheckInTime(attendanceData.data.checkInTime)
         setCheckOutTime(attendanceData.data.checkOutTime || '')
@@ -49,7 +48,7 @@ const Attendance = () => {
   }
 
   useEffect(() => {
-    fetchAttendanceData(new Date());
+    fetchAttendanceData(date);
   }, []);
 
   return (
