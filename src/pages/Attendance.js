@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import CustomCalendar from '../components/Calendar/Calendar';
 import AttendanceForm from '../components/AttendanceForm/AttendanceForm';
 
@@ -12,7 +12,7 @@ const Attendance = () => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px', height: '100vh', justifyContent: 'flex-start' }}>
-      <h1>Employee Attendance Panel</h1>
+      <h1>Attendance Panel</h1>
       <div style={{ width: '90%' }}>
         <CustomCalendar date={date} setDate={handleDateChange} />
         <AttendanceForm date={date}/>

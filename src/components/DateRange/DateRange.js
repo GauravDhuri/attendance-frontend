@@ -1,11 +1,8 @@
 import { TextField } from '@mui/material';
 import { getStartAndEndDate } from '../../utils/utils';
 import './DateRange.css'
-import { useState } from 'react';
 
-function DateRange({ startDate, handleStartDateChange, endDate, handleEndDateChange, setStartDate, setEndDate }) {
-  const [isCustomRange, setIsCustomRange] = useState(false);
-
+function DateRange({ startDate, handleStartDateChange, endDate, handleEndDateChange, setStartDate, setEndDate, isCustomRange, setIsCustomRange }) {
   const handleOnQuickSelection = (selection) => {
     const { start, end } = getStartAndEndDate(selection);
     setStartDate(start);

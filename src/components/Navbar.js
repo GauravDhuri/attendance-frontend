@@ -14,8 +14,6 @@ const Navbar = ({ handleLogout }) => {
     navigate('/');
   };
 
-  console.log(localStorage.getItem('role'))
-
   return (
     <Drawer
       sx={{
@@ -34,15 +32,12 @@ const Navbar = ({ handleLogout }) => {
         <ListItem button onClick={() => handleNavigation('/dashboard')}>
           <ListItemText primary="Dashboard" sx={{ paddingLeft: '20px', fontWeight: 'bold' }} />
         </ListItem>
-        <ListItem button onClick={() => handleNavigation('/employeeInfo')}>
-          <ListItemText primary="Employee Panel" sx={{ paddingLeft: '20px', fontWeight: 'bold' }} />
+        <ListItem button onClick={() => handleNavigation('/attendace-history')}>
+          <ListItemText primary="Attendance History" sx={{ paddingLeft: '20px', fontWeight: 'bold' }} />
         </ListItem>
-        <ListItem button onClick={() => handleNavigation('/attendance')}>
+        <ListItem button onClick={() => handleNavigation('/attendance-panel')}>
           <ListItemText primary="Attendance Panel" sx={{ paddingLeft: '20px', fontWeight: 'bold' }} />
         </ListItem>
-        {(localStorage.getItem('role') || '') === 'Admin' ? <ListItem button onClick={() => handleNavigation('/admin')}>
-          <ListItemText primary="Admin Panel" sx={{ paddingLeft: '20px', fontWeight: 'bold' }} />
-        </ListItem> : <></>}
         <ListItem button onClick={handleLogoutClick}>
           <ListItemText primary="Logout" sx={{ paddingLeft: '20px', fontWeight: 'bold' }} />
         </ListItem>
