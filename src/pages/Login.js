@@ -39,7 +39,7 @@ const Login = ({ setIsAuthenticated }) => {
         height: '100%',
       }}
     >
-      <ToastContainer position='top-center'/>
+      <ToastContainer />
       <Container maxWidth="xs">
         <Box
           sx={{

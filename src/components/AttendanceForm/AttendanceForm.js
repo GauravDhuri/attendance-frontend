@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Box, TextField, Typography } from '@mui/material';
+import { Box, TextField } from '@mui/material';
 import { postRequest } from '../../utils/utils';
 import './AttendanceForm.css'
 import { toast, ToastContainer } from 'react-toastify';
 
-const AttendanceForm = ({ date }) => {
-  const [checkInTime, setCheckInTime] = useState('');
-  const [checkOutTime, setCheckOutTime] = useState('');
+const AttendanceForm = ({ date, checkInTime, checkOutTime, setCheckInTime, setCheckOutTime }) => {
 
   const handleSubmit = async () => {
     const email = localStorage.getItem('email') || '';
@@ -45,37 +43,10 @@ const AttendanceForm = ({ date }) => {
     }
   }
 
-  useEffect(() => {
-    const fetchAttendanceData = async () => {
-      try {
-        const formattedDate = date.toLocaleDateString('en-CA');
-        const attendanceData = await postRequest('/attendance/fetch', {
-          date: formattedDate,
-          email: localStorage.getItem('email') || '',
-        });
-  
-        if(attendanceData.status && Object.keys(attendanceData.data).length) {
-          setCheckInTime(attendanceData.data.checkInTime)
-           setCheckOutTime(attendanceData.data.checkOutTime || '')
-        } else {
-          setCheckInTime('')
-          setCheckOutTime('')
-        }
-      } catch (error) {
-        console.error("Error fetching attendance data:", error);
-        setCheckInTime('')
-        setCheckOutTime('')
-      }
-    };
-  
-    fetchAttendanceData()
-  }, [date]);
-
   return (
     <>
-      <ToastContainer position='top-center'/>
+      <ToastContainer />
       <div className='attendance-form'>
-        <Typography variant="h4">Set Attendance for {date.toDateString()}</Typography>
         <Box sx={{ 
           display: 'flex', 
           justifyContent: 'center', 

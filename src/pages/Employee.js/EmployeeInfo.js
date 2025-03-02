@@ -3,121 +3,106 @@ import './Employee.css';
 import { postRequest } from '../../utils/utils';
 import DateRange from '../../components/DateRange/DateRange';
 import { Box, Button } from '@mui/material';
-import { useLocation } from 'react-router-dom';
 import AdditionalFilter from '../../components/AdditionalFilter';
+import { toast, ToastContainer } from 'react-toastify';
 
 function EmployeeInfo() {
   const [attendanceData, setAttendanceData] = useState([]);
   const [totalRecords, setTotalRecords] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize] = useState(5);
+  const [pageSize] = useState(10);
   const [loading, setLoading] = useState(false);
-
+  const [isCustomRange, setIsCustomRange] = useState(false);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [emailFilter, setEmailFilter] = useState('');
+  const [nameFilter, setNameFilter] = useState('');
   const [departmentFilter, setDepartmentFilter] = useState('');
   
   const totalPages = Math.ceil(totalRecords / pageSize);
-
-  const [sortColumn, setSortColumn] = useState(null);
-  const [sortOrder, setSortOrder] = useState('asc');
-
-  const [debouncedEmailFilter, setDebouncedEmailFilter] = useState(emailFilter);
-  const [typingTimeout, setTypingTimeout] = useState(null);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const handleStartDateChange = (e) => setStartDate(e.target.value);
   const handleEndDateChange = (e) => setEndDate(e.target.value);
-  const [isCustomRange, setIsCustomRange] = useState(false);
 
-  const handleSort = (column) => {
-    if (sortColumn === column) {
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortColumn(column);
-      setSortOrder('asc');
+  const handleNameFilterChange = (e) => {
+    setNameFilter(e.target.value)
+  }
+
+  const handleDepartmentFilterChange = (e) => {
+    setDepartmentFilter(e.target.value);
+    setCurrentPage(1);
+  }
+
+  const fetchEmployeeData = async () => {
+    try {
+      setLoading(true);
+      const request = {
+        pagination: {
+          page: currentPage,
+          pageSize: pageSize
+        },
+      };
+
+      if(localStorage.getItem('role') === 'Admin') {
+        if(nameFilter) request.name = nameFilter
+      } else {
+        request.email = localStorage.getItem('email')
+      }
+
+      if(departmentFilter) {
+        request.department = departmentFilter
+      }
+
+      if(isCustomRange) {
+        if(!startDate || !endDate) {
+          return;
+        }
+      }
+      if (startDate && endDate) {
+        request.dateRange = {
+          startDate,
+          endDate
+        };
+      }
+
+      const employeeData = await postRequest('/attendance/fetchAll', request);
+
+      if (employeeData.status) {
+        setAttendanceData(employeeData.data.records);
+        setTotalRecords(employeeData.data?.pagination?.totalCount || 0);
+        if(!employeeData.data || !Object.keys(employeeData.data).length || !employeeData.data.records.length) {
+          toast.info(employeeData.msg)
+        }
+      } else {
+        setAttendanceData([]);
+        toast.info(employeeData.msg)
+      }
+    } catch (error) {
+      toast.error('Something went wrong')
+    } finally {
+      setLoading(false);
     }
   };
-
-  const handleEmailFilterChange = (e) => {
-    const value = e.target.value;
-    setEmailFilter(value);
-
-    if (typingTimeout) {
-      clearTimeout(typingTimeout);
-    }
-
-    setTypingTimeout(setTimeout(() => {
-      setDebouncedEmailFilter(value);
-    }, 2000));
-  };
-
-  const handleDepartmentFilterChange = (e) => setDepartmentFilter(e.target.value);
 
   useEffect(() => {
-    const fetchEmployeeData = async () => {
-      try {
-        setLoading(true);
-        const request = {
-          pagination: {
-            page: currentPage,
-            pageSize: pageSize
-          },
-        };
-
-        if(localStorage.getItem('role') === 'Admin') {
-          if(debouncedEmailFilter) request.name = debouncedEmailFilter
-        } else {
-          request.email = localStorage.getItem('email')
-        }
-
-        if(departmentFilter) {
-          request.department = departmentFilter
-        }
-
-        if(isCustomRange) {
-          if(!startDate || !endDate) {
-            return;
-          }
-        }
-        if (startDate && endDate) {
-          request.dateRange = {
-            startDate,
-            endDate
-          };
-        }
-
-        const employeeData = await postRequest('/attendance/fetchAll', request);
-
-        if (employeeData.status) {
-          setAttendanceData(employeeData.data.records);
-          setTotalRecords(employeeData.data?.pagination?.totalCount || 0);
-        } else {
-          setAttendanceData([]);
-        }
-      } catch (error) {
-        console.error("Error fetching all attendance data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchEmployeeData();
-  }, [currentPage, startDate, endDate, debouncedEmailFilter, departmentFilter]);
+  }, [currentPage, startDate, endDate, departmentFilter]);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px', height: '100vh', justifyContent: 'flex-start' }}>
-      <h1>{localStorage.getItem('role') === 'Admin' ? 'Admin Panel' : 'Attendance History'}</h1>
+      <ToastContainer />
+      <h1>Attendance History</h1>
       <div style={{ width: '100%' }}>
         {localStorage.getItem('role') === 'Admin' && (
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: '20px', marginBottom: '5px' }}>
             <AdditionalFilter 
-              emailFilter={emailFilter}
+              includeFilter={['name','department']}
+              nameFilter={nameFilter}
               handleDepartmentFilterChange={handleDepartmentFilterChange}
               departmentFilter={departmentFilter}
-              handleEmailFilterChange={handleEmailFilterChange}
+              handleNameFilterChange={handleNameFilterChange}
+              fetchData={fetchEmployeeData}
             />
           </Box>
         )}
@@ -139,12 +124,12 @@ function EmployeeInfo() {
           <table>
             <thead>
               <tr>
-                <th onClick={() => handleSort('date')}>Date</th>
-                {localStorage.getItem('role') === 'Admin' && <th onClick={() => handleSort('name')}>Name</th>}
-                {localStorage.getItem('role') === 'Admin' && <th onClick={() => handleSort('department')}>Department</th>}
-                <th onClick={() => handleSort('checkInTime')}>Check-In</th>
-                <th onClick={() => handleSort('checkOutTime')}>Check-Out</th>
-                <th onClick={() => handleSort('totalWorkHours')}>Total Hours</th>
+                <th>Date</th>
+                {localStorage.getItem('role') === 'Admin' && <th>Name</th>}
+                {localStorage.getItem('role') === 'Admin' && <th>Department</th>}
+                <th>Check-In</th>
+                <th>Check-Out</th>
+                <th>Total Hours</th>
               </tr>
             </thead>
             <tbody>
