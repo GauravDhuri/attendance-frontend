@@ -20,6 +20,7 @@ const Login = ({ setIsAuthenticated }) => {
         localStorage.setItem('userName', login.data.userName);
         localStorage.setItem('email', login.data.email);
         localStorage.setItem('role', login.data.role);
+        localStorage.setItem('department', login.data.department);
         setIsAuthenticated(true);
         navigate('/dashboard');
       } else {

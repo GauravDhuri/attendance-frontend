@@ -38,18 +38,18 @@
 }
 
 .react-calendar__tile:hover {
-  background-color: #fe9a00;
+  background-color: #ffe7c2;
   color: white;
   transform: scale(1.1);
 }
 
 .react-calendar__tile--active {
-  background-color: #2196f3;
-  color: white;
+  background-color: #f0ffff;
+  color: #3f51b5;
 }
 
 .react-calendar__tile--now {
-  background-color: #00b300;
+  background-color: #baffcf;
   color: white;
 }
 

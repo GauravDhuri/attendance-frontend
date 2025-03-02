@@ -36,7 +36,6 @@ const Attendance = () => {
       } else {
         setCheckInTime('')
         setCheckOutTime('')
-        toast.info(attendanceData.msg || '')
       }
     } catch (error) {
       toast.error('Something went wrong')

@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import './Employee.css';
 import { postRequest } from '../../utils/utils';
 import DateRange from '../../components/DateRange/DateRange';
-import { Box, Button } from '@mui/material';
+import { Box, Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import AdditionalFilter from '../../components/AdditionalFilter';
 import { toast, ToastContainer } from 'react-toastify';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 function EmployeeInfo() {
   const [attendanceData, setAttendanceData] = useState([]);
@@ -17,6 +19,7 @@ function EmployeeInfo() {
   const [endDate, setEndDate] = useState('');
   const [nameFilter, setNameFilter] = useState('');
   const [departmentFilter, setDepartmentFilter] = useState('');
+  const [exportOption, setExportOption] = useState(null);
   
   const totalPages = Math.ceil(totalRecords / pageSize);
 
@@ -67,13 +70,9 @@ function EmployeeInfo() {
       }
 
       const employeeData = await postRequest('/attendance/fetchAll', request);
-
       if (employeeData.status) {
         setAttendanceData(employeeData.data.records);
-        setTotalRecords(employeeData.data?.pagination?.totalCount || 0);
-        if(!employeeData.data || !Object.keys(employeeData.data).length || !employeeData.data.records.length) {
-          toast.info(employeeData.msg)
-        }
+        setTotalRecords(employeeData.data.pagination?.totalCount || 0);
       } else {
         setAttendanceData([]);
         toast.info(employeeData.msg)
@@ -85,6 +84,73 @@ function EmployeeInfo() {
     }
   };
 
+  const handleExport = async (type) => {
+    try {
+      const request = {
+        skipPagination: true
+      };
+
+      if(nameFilter) request.name = nameFilter
+      if(departmentFilter) request.department = departmentFilter
+      if(startDate && endDate) {
+        request.dateRange = {
+          startDate,
+          endDate
+        };
+      }
+
+      const fetchAllData = await postRequest('/attendance/fetchAll', request);
+      let data
+      if(fetchAllData.status && fetchAllData.data?.records.length) {
+        data = fetchAllData.data.records;
+      } else {
+        throw data;
+      }
+      if (type === 'csv') {
+        exportToCSV(data);
+      } else if (type === 'excel') {
+        exportToExcel(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const exportToCSV = (data) => {
+    const csvRows = [];
+    const headers = [
+      'Date',
+      'Name',
+      'Department',
+      'Check-In',
+      'Check-Out',
+      'Total Hours',
+    ];
+    csvRows.push(headers.join(','));
+
+    data.forEach((entry) => {
+      const row = [
+        entry.date,
+        entry.name,
+        entry.department,
+        entry.checkInTime,
+        entry.checkOutTime,
+        entry.totalWorkHours,
+      ];
+      csvRows.push(row.join(','));
+    });
+
+    const blob = new Blob([csvRows.join('\n')], { type: 'text/csv' });
+    saveAs(blob, 'attendance_data.csv');
+  };
+
+  const exportToExcel = (data) => {
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Attendance Data');
+    XLSX.writeFile(wb, 'attendance_data.xlsx');
+  };
+
   useEffect(() => {
     fetchEmployeeData();
   }, [currentPage, startDate, endDate, departmentFilter]);
@@ -93,7 +159,7 @@ function EmployeeInfo() {
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px', height: '100vh', justifyContent: 'flex-start' }}>
       <ToastContainer />
       <h1>Attendance History</h1>
-      <div style={{ width: '100%' }}>
+      <div style={{ width: '90%' }}>
         {localStorage.getItem('role') === 'Admin' && (
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: '20px', marginBottom: '5px' }}>
             <AdditionalFilter 
@@ -118,6 +184,28 @@ function EmployeeInfo() {
           setIsCustomRange={setIsCustomRange}
         />
 
+        <div className='employee-container'>
+          <select
+            value={exportOption}
+            onChange={(e) => setExportOption(e.target.value)}
+          >
+          <option value="" style={{ color: '#8e8e8e' }}>Export As</option>
+          {['csv', 'excel'].map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+        
+          <button
+            className="export-button"
+            onClick={() => handleExport(exportOption)}
+            disabled={!exportOption || (!attendanceData && !attendanceData.length)}
+          >
+            Export
+          </button>
+        </div>
+
         {loading ? (
           <div>Loading...</div>
         ) : (
@@ -133,16 +221,24 @@ function EmployeeInfo() {
               </tr>
             </thead>
             <tbody>
-              {attendanceData && attendanceData.map((entry,index) => (
-                <tr key={index}>
-                  <td>{entry.date}</td>
-                  {localStorage.getItem('role') === 'Admin' && <td>{entry.name}</td>}
-                  {localStorage.getItem('role') === 'Admin' && <td>{entry.department}</td>}
-                  <td>{entry.checkInTime}</td>
-                  <td>{entry.checkOutTime}</td>
-                  <td>{(typeof entry.totalWorkHours === 'number') ? entry.totalWorkHours.toFixed(2) : entry.totalWorkHours}</td>
+              {attendanceData && attendanceData.length > 0 ? (
+                attendanceData.map((entry, index) => (
+                  <tr key={index}>
+                    <td>{entry.date}</td>
+                    {localStorage.getItem('role') === 'Admin' && <td>{entry.name}</td>}
+                    {localStorage.getItem('role') === 'Admin' && <td>{entry.department}</td>}
+                    <td>{entry.checkInTime}</td>
+                    <td>{entry.checkOutTime}</td>
+                    <td>{(typeof entry.totalWorkHours === 'number') ? entry.totalWorkHours.toFixed(2) : entry.totalWorkHours}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={localStorage.getItem('role') === 'Admin' ? 6 : 3} style={{ textAlign: 'center', color: 'gray' }}>
+                    No data available
+                  </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         )}
@@ -152,7 +248,7 @@ function EmployeeInfo() {
         <button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1 || totalRecords === 0}>
           Previous
         </button>
-        <span> Page {currentPage} of {totalPages} </span>
+        <span> Page {totalRecords === 0 ? 0 : currentPage} of {totalPages} </span>
         <button onClick={() => paginate(currentPage + 1)} disabled={currentPage === totalPages || totalRecords === 0}>
           Next
         </button>

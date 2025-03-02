@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
-import Admin from './pages/Admin';
 import Attendance from './pages/Attendance';
 import EmployeeInfo from './pages/Employee.js/EmployeeInfo';
 import PrivateRoute from './components/ProtectedRoute';
@@ -23,6 +22,7 @@ function App() {
     localStorage.removeItem('userName');
     localStorage.removeItem('email');
     localStorage.removeItem('role');
+    localStorage.removeItem('department');
     setIsAuthenticated(false);
   }
 

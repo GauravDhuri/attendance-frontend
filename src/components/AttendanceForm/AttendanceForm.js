@@ -56,7 +56,7 @@ const AttendanceForm = ({ date, checkInTime, checkOutTime, setCheckInTime, setCh
         }}>
           
           <Box sx={{ textAlign: 'center' }}>
-            <div style={{ marginBottom: '8px', fontWeight: 'bold' }}>Check-in Time</div>
+            <div style={{ marginBottom: '8px', fontWeight: 'bold', color: '#000032', fontSize: '1.4rem' }}>Check-in Time</div>
             <TextField
               type="time"
               value={checkInTime}
@@ -72,7 +72,7 @@ const AttendanceForm = ({ date, checkInTime, checkOutTime, setCheckInTime, setCh
           </Box>
           
           <Box sx={{ textAlign: 'center' }}>
-            <div style={{ marginBottom: '8px', fontWeight: 'bold' }}>Check-out Time</div>
+            <div style={{ marginBottom: '8px', fontWeight: 'bold', color: '#000032', fontSize: '1.4rem' }}>Check-out Time</div>
             <TextField
               type="time"
               value={checkOutTime}
