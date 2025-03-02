@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Card, CardContent, Paper, Divider } from '@mui/material';
+import { Box, Typography, Card, CardContent, Divider } from '@mui/material';
 
 const Dashboard = () => {
   const userName = localStorage.getItem('userName') || '';

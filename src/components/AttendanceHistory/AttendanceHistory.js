@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import './Employee.css';
+import './AttendanceHistory.css';
 import { postRequest } from '../../utils/utils';
-import DateRange from '../../components/DateRange/DateRange';
-import { Box, Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import AdditionalFilter from '../../components/AdditionalFilter';
+import DateRange from '../DateRange/DateRange';
+import { Box } from '@mui/material';
+import AdditionalFilter from '../AdditionalFilter';
 import { toast, ToastContainer } from 'react-toastify';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
-function EmployeeInfo() {
+function AttendanceHistory() {
   const [attendanceData, setAttendanceData] = useState([]);
   const [totalRecords, setTotalRecords] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -257,4 +257,4 @@ function EmployeeInfo() {
   );
 }
 
-export default EmployeeInfo;
+export default AttendanceHistory;
