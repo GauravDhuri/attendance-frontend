@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
@@ -33,7 +33,7 @@ function App() {
 
         <div style={{ paddingLeft: '40px', paddingRight: '40px', width: '100%' }}>
           <Routes>
-            <Route path="/" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
+            <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" /> :<Login setIsAuthenticated={setIsAuthenticated} />} />
 
             <Route path="/dashboard" element={<PrivateRoute isAuthenticated={isAuthenticated} element={<Dashboard />} />} />
             <Route path="/attendance-panel" element={<PrivateRoute isAuthenticated={isAuthenticated} element={<Attendance />} />} />
