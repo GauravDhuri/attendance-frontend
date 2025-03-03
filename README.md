@@ -40,16 +40,19 @@ To run the project locally, follow these steps:
   ```bash
   git clone <repository-url>
   cd attendance-frontend
+  ```
 
 2. Install the required dependencies:
 
   ```bash
   npm install
+  ```
 
 3. Start the development server:
 
   ```bash
   npm start
+  ```
 
 ---
 
@@ -68,3 +71,8 @@ Once the app is running, you can access the following features:
   Dashboard 2 - Attendance History:
   Employees can view their historical attendance records in the "Attendance History" section.
   Admins can also view all employee attendance records and make corrections if necessary.
+
+
+## License
+
+  This project is licensed under the MIT License
