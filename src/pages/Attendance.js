@@ -56,7 +56,9 @@ const Attendance = () => {
       <h1>Attendance Panel</h1>
       <Typography variant='h4'>Viewing Attendance of {nameFilter}</Typography>
       <div style={{ width: '90%'}}>
+        <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'center'}}>
         <AditionalFilter includeFilter={['name']} handleNameFilterChange={handleNameFilterChange} fetchData={() => fetchAttendanceData(date)}/>
+        </div>
         <CustomCalendar date={date} setDate={handleDateChange} />
         <AttendanceForm 
           date={date}
