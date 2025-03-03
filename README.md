@@ -1,70 +1,70 @@
-# Getting Started with Create React App
+# Attendance Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+The **Attendance Frontend** project is a web application designed to manage attendance for employees. It provides a simple and user-friendly interface with the following features:
 
-In the project directory, you can run:
+- **Login**: Basic user authentication.
+- **Dashboard 1**: Allows users (employees) to mark their attendance for any given day.
+- **Dashboard 2**: Provides a history view of attendance records, where users can track their past attendance.
+- **Role-based Access**: Users can have one of two roles:
+  - **Employee**: Can mark attendance and view their history.
+  - **Admin**: Can view and correct attendance records of all employees.
 
-### `npm start`
+The project is designed for demo purposes and is intended to be a starting point for more complex attendance systems.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features
 
-### `npm test`
+- **User Authentication**: Login functionality for both employees and admins.
+- **Mark Attendance**: Employees can mark their attendance for any given day.
+- **View Attendance History**: Employees can view a history of their attendance records.
+- **Admin Role**: Admins can view and correct any employee's attendance record.
+- **Responsive Design**: Interface is designed to be used on both desktop and mobile devices.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To run the project locally, follow these steps:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Prerequisites
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Ensure that you have **Node.js** and **npm** installed on your machine.
 
-### `npm run eject`
+### Steps
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. Clone the repository to your local machine:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  ```bash
+  git clone <repository-url>
+  cd attendance-frontend
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. Install the required dependencies:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+  ```bash
+  npm install
 
-## Learn More
+3. Start the development server:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+  ```bash
+  npm start
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## Usage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Once the app is running, you can access the following features:
 
-### Analyzing the Bundle Size
+### Login:
+  Navigate to the login page to authenticate as either an employee or admin.
+  Employees can mark their attendance on the "Attendance Dashboard."
+  Admins have additional privileges to view and modify all employees' attendance records.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+  Dashboard 1 - Mark Attendance:
+  Employees can mark their attendance for the current day by clicking the "Mark Attendance" button. After marking attendance, the employee will see a confirmation message.
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  Dashboard 2 - Attendance History:
+  Employees can view their historical attendance records in the "Attendance History" section.
+  Admins can also view all employee attendance records and make corrections if necessary.

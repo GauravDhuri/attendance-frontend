@@ -36,8 +36,8 @@ function App() {
             <Route path="/" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
 
             <Route path="/dashboard" element={<PrivateRoute isAuthenticated={isAuthenticated} element={<Dashboard />} />} />
-            <Route path='/attendace-history' element={<PrivateRoute isAuthenticated={isAuthenticated} element={<EmployeeInfo />} />} />
             <Route path="/attendance-panel" element={<PrivateRoute isAuthenticated={isAuthenticated} element={<Attendance />} />} />
+            <Route path='/attendace-history' element={<PrivateRoute isAuthenticated={isAuthenticated} element={<EmployeeInfo />} />} />
           </Routes>
         </div>
       </div>
