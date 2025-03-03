@@ -4,7 +4,7 @@ import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Attendance from './pages/Attendance';
-import EmployeeInfo from './pages/Employee.js/EmployeeInfo';
+import AttendanceHistory from './components/AttendanceHistory/AttendanceHistory';
 import PrivateRoute from './components/ProtectedRoute';
 
 function App() {
@@ -37,7 +37,7 @@ function App() {
 
             <Route path="/dashboard" element={<PrivateRoute isAuthenticated={isAuthenticated} element={<Dashboard />} />} />
             <Route path="/attendance-panel" element={<PrivateRoute isAuthenticated={isAuthenticated} element={<Attendance />} />} />
-            <Route path='/attendace-history' element={<PrivateRoute isAuthenticated={isAuthenticated} element={<EmployeeInfo />} />} />
+            <Route path='/attendace-history' element={<PrivateRoute isAuthenticated={isAuthenticated} element={<AttendanceHistory />} />} />
           </Routes>
         </div>
       </div>
