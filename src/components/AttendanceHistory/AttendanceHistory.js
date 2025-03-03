@@ -160,17 +160,16 @@ function AttendanceHistory() {
       <ToastContainer />
       <h1>Attendance History</h1>
       <div style={{ width: '90%' }}>
+        <div style={{display: 'flex' ,justifyContent: 'flex-end', alignItems: 'center'}}>
         {localStorage.getItem('role') === 'Admin' && (
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: '20px', marginBottom: '5px' }}>
-            <AdditionalFilter 
-              includeFilter={['name','department']}
-              nameFilter={nameFilter}
-              handleDepartmentFilterChange={handleDepartmentFilterChange}
-              departmentFilter={departmentFilter}
-              handleNameFilterChange={handleNameFilterChange}
-              fetchData={fetchEmployeeData}
-            />
-          </Box>
+          <AdditionalFilter 
+            includeFilter={['name','department']}
+            nameFilter={nameFilter}
+            handleDepartmentFilterChange={handleDepartmentFilterChange}
+            departmentFilter={departmentFilter}
+            handleNameFilterChange={handleNameFilterChange}
+            fetchData={fetchEmployeeData}
+          />
         )}
 
         <DateRange
@@ -183,8 +182,9 @@ function AttendanceHistory() {
           isCustomRange={isCustomRange}
           setIsCustomRange={setIsCustomRange}
         />
+        </div>
 
-        <div className='employee-container'>
+        {localStorage.getItem('role') === 'Admin' && (<div className='export'>
           <select
             value={exportOption}
             onChange={(e) => setExportOption(e.target.value)}
@@ -195,7 +195,7 @@ function AttendanceHistory() {
               {option}
             </option>
           ))}
-        </select>
+          </select>
         
           <button
             className="export-button"
@@ -204,7 +204,7 @@ function AttendanceHistory() {
           >
             Export
           </button>
-        </div>
+        </div>)}
 
         {loading ? (
           <div>Loading...</div>

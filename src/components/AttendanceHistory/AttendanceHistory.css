@@ -75,7 +75,7 @@ td {
   color: #000032;
 }
 
-.employee-container {
+.export {
   width: 100%;
   display: flex;
   justify-content: flex-end;
@@ -83,14 +83,14 @@ td {
   gap: 20px;
 }
 
-.employee-container select {
+.export select {
   font-size: 1.2rem;
   padding: 8px 16px;
   border-radius: 5px;
   border: 1px solid #000032;
 }
 
-.employee-container .export-button {
+.export .export-button {
   font-size: 1.2rem;
   padding: 8px 16px;
   margin: 10px;
@@ -102,7 +102,7 @@ td {
   cursor: pointer;
 }
 
-.employee-container .export-button:disabled {
+.export .export-button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
   border: none;

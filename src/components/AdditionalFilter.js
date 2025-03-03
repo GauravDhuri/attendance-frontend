@@ -4,8 +4,8 @@ const AditionalFilter = ({ nameFilter, handleDepartmentFilterChange, departmentF
   const departmentOptions = ['HR', 'Engineering', 'Marketing', 'Sales'];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-      {includeFilter.includes('name') && localStorage.getItem('role') === 'Admin' ? <div>
+    <>
+      {includeFilter.includes('name') && localStorage.getItem('role') === 'Admin' ? <>
         <input
           type="text"
           placeholder="Name"
@@ -25,8 +25,7 @@ const AditionalFilter = ({ nameFilter, handleDepartmentFilterChange, departmentF
           style={{
             fontSize: '1.4rem',
             padding: '8px 16px',
-            margin: '10px',
-            marginBottom: '15px',
+            margin: '5px',
             backgroundColor: '#000032',
             color: 'white',
             border: 'none',
@@ -34,7 +33,7 @@ const AditionalFilter = ({ nameFilter, handleDepartmentFilterChange, departmentF
             cursor: 'pointer'
           }}  
         >Search</button>
-      </div> : <></>}
+      </> : <></>}
       {includeFilter.includes('department') ? <select
         value={departmentFilter}
         onChange={(e) => handleDepartmentFilterChange(e)}
@@ -57,7 +56,7 @@ const AditionalFilter = ({ nameFilter, handleDepartmentFilterChange, departmentF
           </option>
         ))}
       </select>: <></>}
-    </div>
+    </>
   );
 };
 
